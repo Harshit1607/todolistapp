@@ -1,6 +1,6 @@
 import React ,{useState}from 'react';
 import { useSelector, useDispatch } from 'react-redux'
-import { addTodo, deleteTodo, completeTodo } from '../features/todoSlice';
+import { addTodo} from '../features/todoSlice';
 
 export const Searchbox = () => {
   const todos = useSelector((state)=>state.todos);
@@ -20,7 +20,7 @@ export const Searchbox = () => {
 
   return (
         <div className='Addtodo'>
-          <input type='text' onChange={handleChange} value={text}/>
+          <input type='text' onChange={handleChange} value={text} placeholder='Add new tasks...'/>
           <button onClick={AddTodo} >Add</button>
         </div>
   )

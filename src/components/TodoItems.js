@@ -1,6 +1,7 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { addTodo, deleteTodo, completeTodo } from '../features/todoSlice';
+import { deleteTodo, completeTodo } from '../features/todoSlice';
+
 
 export const TodoItems = () => {
   const todos = useSelector((state)=>state.todos);
@@ -8,19 +9,19 @@ export const TodoItems = () => {
 
   return (
     <div className='pending-todo'>
-          <h2>pending todos</h2>
+          <h2>Pending Todos</h2>
             {
               todos.todoItems.map((item, index) => {
                 return (
                   <div className='todos'>
-                    <input type='checkbox' onChange={()=>{
+                    <input type='radio' onChange={()=>{
                       console.log(todos.completedTodo);
                       dispatch(completeTodo(index))}} />
                     <div className='info' key={index} id={index}>
-                      <span>{item.text}</span>
-                      <span>{item.date}</span>
+                      <span className='info-main' >Task- {item.text}</span>
+                      <span className='info-date'>Date Added- {item.date}</span>
                     </div>
-                    <button onClick={()=>{dispatch(deleteTodo(index))}} >Delete</button>
+                    <button onClick={()=>{dispatch(deleteTodo(index))}} >Del</button>
                    </div>
                 )
               })

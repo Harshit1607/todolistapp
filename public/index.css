@@ -7,6 +7,10 @@ body {
   -moz-osx-font-smoothing: grayscale;
   width: 100%;
   height: 100vh;
+  /* background-color: #DFD0B8; */
+background-image: url("https://www.transparenttextures.com/patterns/back-pattern.png");
+
+
 }
 
 code {
@@ -34,7 +38,6 @@ code {
   display: flex;
   flex-direction: column;
   align-items: center;
-  border-right: solid;
 }
 
 .Addtodo{
@@ -48,29 +51,46 @@ code {
 }
 
 .Addtodo input{
-  width: 60%;
-  height: 30px;
+  width: 40%;
+  height: 40px;
   margin-right: 0;
+  border-radius: 20px;
+  border: none;
+  padding-left: 20px;
+  background-color: #e0dcd6;
+  color: #153448;
 }
 
 .Addtodo button{
-  height: 40px;
-  border: none;
-  margin-left: 0;
+  height: 42px;
+  border: 2px solid #3C5B6F;
+  margin-left: -35px;
+  border-radius: 40px;
+  width: 100px;
+  background-color: #3C5B6F;
+  color: white;
 }
 
 .pending-todo, .completed-todo{
+  border-radius: 25px;
+  border: 10px solid #153448;
   height: 70%;
-  width: 60%;
-  border: solid;
+  width: 45%;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.pending-todo h2{
+.pending-todo h2, .completed-todo h2{
   height: fit-content;
   margin-bottom: 10px;
+  color: #3C5B6F;
+}
+
+.completed-todo{
+  width: 50%;
+  padding-left: 5px;
+  padding-right: 5px;
 }
 
 .todos{
@@ -79,14 +99,19 @@ code {
   justify-content: space-around;
   align-items: center;
   width: 90%;
-  height: 50px;
+  min-height: 50px;
+  max-height: fit-content;
   margin-top: 5px;
   padding: 0;
+  background-color: #3C5B6F;
+  color: white;
+  border-radius: 20px;
 }
 
 .todos input{
   width: 20px;
-  justify-self: flex-start;
+  margin-left: 5px;
+
 }
 
 .info{
@@ -99,8 +124,29 @@ code {
   padding: 0 5px;
 }
 
-.info p{
+.info span{
   margin: 0;
+  
+}
+
+.info-main{
+  font-size: 16px;
+  font-weight: normal;
+  overflow-wrap: break-word;
+}
+
+.info-date{
+  font-size: 8px;
+  font-weight: light;
+}
+
+.todos button{
+  background-color: whitesmoke;
+  color: #3C5B6F;
+  border-radius: 5px;
+  border: none;
+  margin-right: 15px;
+  height: 20px;
 }
 
 .Right{
