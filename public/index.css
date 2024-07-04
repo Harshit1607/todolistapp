@@ -1,0 +1,122 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  width: 100%;
+  height: 100vh;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+#root{
+  height: 100%;
+  width: 100%;
+  margin: 0;
+}
+
+.App{
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+}
+
+.Left{
+  width: 60%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-right: solid;
+}
+
+.Addtodo{
+  width: 100%;
+  height: 80px;
+  padding-top: 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.Addtodo input{
+  width: 60%;
+  height: 30px;
+  margin-right: 0;
+}
+
+.Addtodo button{
+  height: 40px;
+  border: none;
+  margin-left: 0;
+}
+
+.pending-todo, .completed-todo{
+  height: 70%;
+  width: 60%;
+  border: solid;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.pending-todo h2{
+  height: fit-content;
+  margin-bottom: 10px;
+}
+
+.todos{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  width: 90%;
+  height: 50px;
+  margin-top: 5px;
+  padding: 0;
+}
+
+.todos input{
+  width: 20px;
+  justify-self: flex-start;
+}
+
+.info{
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  margin: 0;
+  border: none;
+  width: 70%;
+  padding: 0 5px;
+}
+
+.info p{
+  margin: 0;
+}
+
+.Right{
+  width: 40%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  border-right: solid;
+  padding-top: 90px;
+}
+
+.Right .todos{
+  width: 100%;
+}
+.Right .info{
+  width: 90%;
+}
