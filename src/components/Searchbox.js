@@ -1,6 +1,6 @@
 import React ,{useState}from 'react';
 import { useSelector, useDispatch } from 'react-redux'
-import { addTodo} from '../features/todoSlice';
+import { addTodo } from '../features/todoSlice';
 
 export const Searchbox = () => {
   const todos = useSelector((state)=>state.todos);
