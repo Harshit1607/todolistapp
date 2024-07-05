@@ -14,7 +14,7 @@ export const TodoItems = () => {
               todos.todoItems.map((item, index) => {
                 return (
                   <div className='todos'>
-                    <input type='radio' onChange={()=>{
+                    <input type='radio' checked={false} className='check-box'onChange={()=>{
                       console.log(todos.completedTodo);
                       dispatch(completeTodo(index))}} />
                     <div className='info' key={index} id={index}>

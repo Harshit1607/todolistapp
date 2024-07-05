@@ -28,7 +28,6 @@ const todoSlice = createSlice({
           text: todoText,
           date: todoDate
         }
-        console.log(todo);
         return{
           ...state,
           todoItems: state.todoItems.filter((todo, index) => index !== action.payload),

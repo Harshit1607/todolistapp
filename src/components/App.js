@@ -6,8 +6,9 @@ import { TodoItems } from './TodoItems';
 function App() {
   return (
     <div className='App'>
+      <div className='Heading'><h1>TODOLIST</h1></div>
+      <Searchbox />
       <div className='Left'>
-        <Searchbox />
         <TodoItems />
       </div>
       <CompletedTodo />
