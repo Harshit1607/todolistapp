@@ -1,7 +1,7 @@
 import React from 'react';
-import { CompletedTodo } from './CompletedTodo';
-import { Searchbox } from './Searchbox';
-import { TodoItems } from './TodoItems';
+import { CompletedTodo } from './CompletedTodo.js';
+import { Searchbox } from './Searchbox.js';
+import { TodoItems } from './TodoItems.js';
 
 function App() {
   return (

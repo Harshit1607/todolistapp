@@ -1,17 +1,16 @@
 import express from "express";
 import bodyParser from "body-parser";
 import mongoose from "mongoose";
-
-
+import cors from 'cors'
 
 const app = express();
-const port = 3000;
-
+const port = 5000;
 
 
 mongoose.connect('mongodb://localhost:27017/todos');
 
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cors())
 
 const todoSchema = new mongoose.Schema({
   text : {
@@ -36,7 +35,7 @@ const Todo = mongoose.model("Todo", todoSchema);
 app.get("/", async (req, res)=>{
   try{
     const todos = await Todo.find();
-    console.log(todos);
+    res.json(todos);
   }catch(err){
     console.log(err);
   }

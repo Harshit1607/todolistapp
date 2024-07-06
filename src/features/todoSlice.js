@@ -1,10 +1,11 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import axios from "axios";
 
-const API_URL='http;//localhost:3000';
+const API_URL='http://localhost:5000/';
 
-const fetchTodos = createAsyncThunk('todos/fetchTodos', async ()=>{
+export const fetchTodos = createAsyncThunk('todos/fetchTodos', async ()=>{
   const result = await axios.get(API_URL);
+  console.log(result.data);
   return result.data;
 })
 
@@ -42,7 +43,7 @@ const todoSlice = createSlice({
   //         completedtodo: [...state.completedtodo, todo]
   //       }
   //   }
-  // }
+  // },
   extraReducers: (builder)=>{
     builder
           .addCase(fetchTodos.pending, (state) => {
@@ -52,8 +53,12 @@ const todoSlice = createSlice({
             state.status = "suceeded";
             state.todoItems = action.payload;
           })
+          .addCase(fetchTodos.rejected, (state, action) => {
+            state.status = 'failed';
+            state.error = action.error.message;
+          })
   }
 })
 
 export default todoSlice.reducer;
-export const {addTodo, deleteTodo, completeTodo} = todoSlice.actions;
+export const {addTodo, deleteTodo, completeTodo, } = todoSlice.actions;
