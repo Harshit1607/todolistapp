@@ -28,7 +28,20 @@ const todoSchema = new mongoose.Schema({
   }
 })
 
+const completedSchema = new mongoose.Schema({
+  text : {
+    type : String,
+    required: true
+  },
+  date: {
+    type: Date,
+    default: Date.now
+  },
+})
+
 const Todo = mongoose.model("Todo", todoSchema);
+
+const CompletedTodo = mongoose.model("CompletedTodo", completedSchema);
 
 // const todo = new Todo({text: "first"});
 // todo.save();
@@ -36,7 +49,8 @@ const Todo = mongoose.model("Todo", todoSchema);
 app.get("/", async (req, res)=>{
   try{
     const todos = await Todo.find();
-    res.json(todos);
+    const completed = await CompletedTodo.find()
+    res.json({todos, completed});
   }catch(err){
     console.log(err);
   }
@@ -49,8 +63,7 @@ app.post("/", async (req, res)=>{
     await todo.save();
     if(todo.save()){
       res.redirect("/");
-    }
-     
+    }   
   }catch(err){
     console.log(err);
   }
@@ -59,6 +72,21 @@ app.post("/", async (req, res)=>{
 app.delete('/:id', async (req, res)=>{ 
   try{
     const id = req.params.id;
+    await Todo.deleteOne({_id: id});
+    res.redirect("/")
+  }catch(err){
+    console.log(err);
+  }
+})
+
+app.patch('/:id', async (req, res)=>{ 
+  try{
+    const id = req.params.id;
+    const todo = await Todo.findById(id);
+    const newtext = todo.text;
+    console.log(todo);
+    const newTodo = await new CompletedTodo({text: newtext});
+    await newTodo.save();
     await Todo.deleteOne({_id: id});
     res.redirect("/")
   }catch(err){

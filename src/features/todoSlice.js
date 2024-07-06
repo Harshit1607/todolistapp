@@ -5,7 +5,9 @@ const API_URL='http://localhost:5000/';
 
 export const fetchTodos = createAsyncThunk('todos/fetchTodos', async ()=>{
   const result = await axios.get(API_URL);
+  console.log(result.data)
   return result.data;
+  
 })
 
 export const addTodo = createAsyncThunk('todos/addTodo', async (text)=>{
@@ -16,6 +18,11 @@ export const addTodo = createAsyncThunk('todos/addTodo', async (text)=>{
 
 export const deleteTodo = createAsyncThunk('todos/deleteTodo', async (id)=>{
   await axios.delete(`${API_URL}${id}`);
+  return id;
+})
+
+export const completeTodo = createAsyncThunk('todos/completeTodo', async (id)=>{
+  await axios.patch(`${API_URL}${id}`);
   return id;
 })
 
@@ -61,7 +68,8 @@ const todoSlice = createSlice({
           })
           .addCase(fetchTodos.fulfilled, (state, action) => {
             state.status = "suceeded";
-            state.todoItems = action.payload;
+            state.todoItems = action.payload.todos;
+            state.completedtodo = action.payload.completed
           })
           .addCase(fetchTodos.rejected, (state, action) => {
             state.status = 'failed';
@@ -78,6 +86,19 @@ const todoSlice = createSlice({
                     ...state,
                     todoItems: state.todoItems.filter((todo, index) => todo._id !== action.payload),
                   };
+          })
+          .addCase(completeTodo.fulfilled, (state, action) => {
+            const todoText = state.todoItems[action.payload].text;
+            const todoDate = state.todoItems[action.payload].date;
+            const todo ={
+              text: todoText,
+              date: todoDate
+            }
+            return{
+              ...state,
+              todoItems: state.todoItems.filter((todo, index) => index !== action.payload),
+              completedtodo: [...state.completedtodo, todo]
+            }
           })
   }
 })
