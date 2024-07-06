@@ -9,6 +9,7 @@ const port = 5000;
 
 mongoose.connect('mongodb://localhost:27017/todos');
 
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors())
 
@@ -42,10 +43,26 @@ app.get("/", async (req, res)=>{
 })
 
 app.post("/", async (req, res)=>{
+    const todotext = req.body.text;
   try{
+    const todo = new Todo({text: todotext});
+    await todo.save();
+    if(todo.save()){
+      res.redirect("/");
+    }
+     
+  }catch(err){
+    console.log(err);
+  }
+})
 
-  }catch{
-
+app.delete('/:id', async (req, res)=>{ 
+  try{
+    const id = req.params.id;
+    await Todo.deleteOne({_id: id});
+    res.redirect("/")
+  }catch(err){
+    console.log(err);
   }
 })
 app.listen(port, () => {

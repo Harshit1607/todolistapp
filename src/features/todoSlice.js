@@ -5,8 +5,18 @@ const API_URL='http://localhost:5000/';
 
 export const fetchTodos = createAsyncThunk('todos/fetchTodos', async ()=>{
   const result = await axios.get(API_URL);
-  console.log(result.data);
   return result.data;
+})
+
+export const addTodo = createAsyncThunk('todos/addTodo', async (text)=>{
+  console.log(text);
+  const result = await axios.post(API_URL, {text});
+  return result.data;
+})
+
+export const deleteTodo = createAsyncThunk('todos/deleteTodo', async (id)=>{
+  await axios.delete(`${API_URL}${id}`);
+  return id;
 })
 
 const initialState = {
@@ -57,8 +67,19 @@ const todoSlice = createSlice({
             state.status = 'failed';
             state.error = action.error.message;
           })
+          .addCase(addTodo.fulfilled, (state, action) => {
+            return{
+                    ...state,
+                    todoItems: [...state.todoItems, action.payload]
+                  }
+          })
+          .addCase(deleteTodo.fulfilled, (state, action) => {
+            return {
+                    ...state,
+                    todoItems: state.todoItems.filter((todo, index) => todo._id !== action.payload),
+                  };
+          })
   }
 })
 
 export default todoSlice.reducer;
-export const {addTodo, deleteTodo, completeTodo, } = todoSlice.actions;

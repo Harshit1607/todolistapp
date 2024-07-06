@@ -1,6 +1,7 @@
 import React ,{useEffect}from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { deleteTodo, completeTodo, fetchTodos } from '../features/todoSlice.js';
+import { deleteTodo,  fetchTodos } from '../features/todoSlice.js';
+import { Searchbox } from './Searchbox.js';
 
 
 export const TodoItems = () => {
@@ -27,13 +28,13 @@ export const TodoItems = () => {
                 return (
                   <div className='todos'>
                     <input type='radio' checked={false} className='check-box'onChange={()=>{
-                      console.log(completedTodo);
-                      dispatch(completeTodo(index))}} />
-                    <div className='info' key={index} id={index}>
+                      
+                      dispatch(deleteTodo(item._id))}} />
+                    <div className='info' key={item._id} id={item._id}>
                       <span className='info-main' >Task- {item.text}</span>
                       <span className='info-date'>Date Added- {item.date}</span>
                     </div>
-                    <button onClick={()=>{dispatch(deleteTodo(index))}} >Del</button>
+                    <button onClick={()=>{dispatch(deleteTodo(item._id))}} >Del</button>
                    </div>
                 )
               })

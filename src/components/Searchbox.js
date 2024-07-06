@@ -1,10 +1,15 @@
-import React ,{useState}from 'react';
+import React ,{useState, useEffect}from 'react';
 import { useSelector, useDispatch } from 'react-redux'
-import { addTodo } from '../features/todoSlice.js';
+import { addTodo, fetchTodos } from '../features/todoSlice.js';
+import { TodoItems } from './TodoItems.js';
 
 export const Searchbox = () => {
   const todos = useSelector((state)=>state.todos);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchTodos());
+  }, [dispatch]);
 
   const [text, setText] = useState("")
 
@@ -14,7 +19,7 @@ export const Searchbox = () => {
   }
 
   function AddTodo(){
-    dispatch(addTodo({text: text, date: new Date().toLocaleString()}));
+    dispatch(addTodo(text));
     setText("")
   }
 
