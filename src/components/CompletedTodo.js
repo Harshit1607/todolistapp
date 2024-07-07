@@ -1,8 +1,14 @@
-import React from 'react'
-import { useSelector } from 'react-redux'
+import React, {useEffect} from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { fetchTodos } from '../features/todoSlice.js';
 
 export const CompletedTodo = () => {
   const todos = useSelector((state)=>state.todos);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchTodos());
+  }, [dispatch]);
 
   return (
     <div className='Right'>
