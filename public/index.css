@@ -95,6 +95,7 @@ code {
   color: white;
   font-family: "Margarine", sans-serif;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
 }
 
 .pending-todo, .completed-todo{
@@ -140,12 +141,13 @@ code {
 .completed-todo .todos{
   background-color: rgb(232, 228, 228);
   color: #3C5B6F;
+  cursor: pointer;
 }
 
 .todos input{
   width: 20px;
   margin-left: 5px;
-
+  cursor: pointer;
 }
 
 .info{
@@ -181,6 +183,7 @@ code {
   border: none;
   margin-right: 15px;
   height: 20px;
+  cursor: pointer;
 }
 
 .Right{

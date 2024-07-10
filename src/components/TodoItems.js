@@ -1,24 +1,15 @@
 import React ,{useEffect}from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { deleteTodo,  fetchTodos, completeTodo } from '../features/todoSlice.js';
-import { Searchbox } from './Searchbox.js';
+import { deleteTodo,  fetchTodos, completeTodo } from '../redux/actions.js';
 
 
 export const TodoItems = () => {
-  const {todoItems, status, error, completedTodo} = useSelector((state)=>state.todos);
+  const {todoItems} = useSelector((state)=>state);
   const dispatch = useDispatch();
-
+  
   useEffect(() => {
     dispatch(fetchTodos());
   }, [dispatch]);
-
-  if (status === 'loading') {
-    return <div>Loading...</div>;
-  }
-
-  if (status === 'failed') {
-    return <div>Error: {error}</div>;
-  }
 
   return (
     <div className='pending-todo'>
@@ -26,7 +17,7 @@ export const TodoItems = () => {
             {
               todoItems.map((item, index) => {
                 return (
-                  <div className='todos'>
+                  <div className='todos' key={item._id}>
                     <input type='radio' checked={false} className='check-box'onChange={()=>{
                       dispatch(completeTodo(item._id))}} />
                     <div className='info' key={item._id} id={item._id}>

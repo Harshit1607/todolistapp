@@ -48,9 +48,9 @@ const CompletedTodo = mongoose.model("CompletedTodo", completedSchema);
 
 app.get("/", async (req, res)=>{
   try{
-    const todos = await Todo.find();
-    const completed = await CompletedTodo.find()
-    res.json({todos, completed});
+    const todoItems = await Todo.find();
+    const completedtodo = await CompletedTodo.find()
+    res.json({todoItems, completedtodo});
   }catch(err){
     console.log(err);
   }
@@ -73,6 +73,7 @@ app.delete('/:id', async (req, res)=>{
   try{
     const id = req.params.id;
     await Todo.deleteOne({_id: id});
+    await CompletedTodo.deleteOne({_id: id});
     res.redirect("/")
   }catch(err){
     console.log(err);

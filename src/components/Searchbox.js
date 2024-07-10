@@ -1,6 +1,6 @@
 import React ,{useState, useEffect}from 'react';
 import { useSelector, useDispatch } from 'react-redux'
-import { addTodo, fetchTodos } from '../features/todoSlice.js';
+import { addTodo, fetchTodos } from '../redux/actions.js';
 import { TodoItems } from './TodoItems.js';
 
 export const Searchbox = () => {
