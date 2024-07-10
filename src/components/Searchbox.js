@@ -4,12 +4,7 @@ import { addTodo, fetchTodos } from '../redux/actions.js';
 import { TodoItems } from './TodoItems.js';
 
 export const Searchbox = () => {
-  const todos = useSelector((state)=>state.todos);
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(fetchTodos());
-  }, [dispatch]);
 
   const [text, setText] = useState("")
 

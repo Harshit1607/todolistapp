@@ -150,6 +150,10 @@ code {
   cursor: pointer;
 }
 
+.todos:-moz-drag-over{
+  cursor: pointer;
+}
+
 .info{
   display: flex;
   flex-direction: column;
@@ -178,12 +182,16 @@ code {
 
 .todos button{
   background-color: whitesmoke;
-  color: #3C5B6F;
+  color: #3c5b6f;
   border-radius: 5px;
   border: none;
   margin-right: 15px;
   height: 20px;
   cursor: pointer;
+}
+.completed-todo button{
+  background-color: #3c5b6f;
+  color: rgb(232, 228, 228);
 }
 
 .Right{

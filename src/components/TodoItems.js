@@ -4,20 +4,23 @@ import { deleteTodo,  fetchTodos, completeTodo } from '../redux/actions.js';
 
 
 export const TodoItems = () => {
-  const {todoItems} = useSelector((state)=>state);
+  const todoItems = useSelector((state)=>state.todoItems);
   const dispatch = useDispatch();
   
   useEffect(() => {
     dispatch(fetchTodos());
-  }, [dispatch]);
+  }, [todoItems]);
 
   return (
-    <div className='pending-todo'>
+    <div className='pending-todo' onDrop={(e)=>{
+      dispatch(fetchTodos())}}>
           <h2>Pending Todos</h2>
             {
               todoItems.map((item, index) => {
                 return (
-                  <div className='todos' key={item._id}>
+                  <div className='todos' key={item._id} draggable 
+                    onDragEnd={(e)=>{
+                    dispatch(completeTodo(item._id))}}> 
                     <input type='radio' checked={false} className='check-box'onChange={()=>{
                       dispatch(completeTodo(item._id))}} />
                     <div className='info' key={item._id} id={item._id}>

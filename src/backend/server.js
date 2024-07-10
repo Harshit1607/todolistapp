@@ -46,7 +46,7 @@ const CompletedTodo = mongoose.model("CompletedTodo", completedSchema);
 // const todo = new Todo({text: "first"});
 // todo.save();
 
-app.get("/", async (req, res)=>{
+app.get("/", cors(), async (req, res)=>{
   try{
     const todoItems = await Todo.find();
     const completedtodo = await CompletedTodo.find()
@@ -60,10 +60,8 @@ app.post("/", async (req, res)=>{
     const todotext = req.body.text;
   try{
     const todo = new Todo({text: todotext});
-    await todo.save();
-    if(todo.save()){
-      res.redirect("/");
-    }   
+    todo.save();
+    res.redirect("/");
   }catch(err){
     console.log(err);
   }
@@ -74,7 +72,8 @@ app.delete('/:id', async (req, res)=>{
     const id = req.params.id;
     await Todo.deleteOne({_id: id});
     await CompletedTodo.deleteOne({_id: id});
-    res.redirect("/")
+    then(
+    res.redirect("/"))
   }catch(err){
     console.log(err);
   }
@@ -89,7 +88,7 @@ app.patch('/:id', async (req, res)=>{
     const newTodo = await new CompletedTodo({text: newtext});
     await newTodo.save();
     await Todo.deleteOne({_id: id});
-    res.redirect("/")
+    then(res.redirect("/"))
   }catch(err){
     console.log(err);
   }

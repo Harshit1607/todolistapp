@@ -14,9 +14,8 @@ export const addTodo = (text)=>  async (dispatch)=>{
 }
 
 export const deleteTodo = (id)=> async (dispatch)=>{
-  const result = await axios.delete(`${API_URL}${id}`);
-  console.log(result.data)
-  dispatch({type: Delete_todos, payload: result.data})
+  await axios.delete(`${API_URL}${id}`);
+  dispatch({type: Delete_todos, payload: id })
 }
 
 export const completeTodo = (id)=> async (dispatch)=>{
