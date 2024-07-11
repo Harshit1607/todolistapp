@@ -1,7 +1,13 @@
-import { legacy_createStore, applyMiddleware } from "redux";
+import { legacy_createStore, applyMiddleware, combineReducers } from "redux";
 import { thunk } from "redux-thunk";
 import todoReducer from "./reducers.js";
+import userReducer from "./user-reducer.jsx";
 
-const store = legacy_createStore(todoReducer, applyMiddleware(thunk));
+const RootReducer = combineReducers({
+  todoReducer,
+  userReducer
+})
+
+const store = legacy_createStore(RootReducer, applyMiddleware(thunk));
 
 export default store;

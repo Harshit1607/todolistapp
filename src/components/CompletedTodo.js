@@ -3,12 +3,12 @@ import { useSelector, useDispatch } from 'react-redux'
 import { fetchTodos, deleteTodo, addTodo } from '../redux/actions.js';
 
 export const CompletedTodo = () => {
-  const completedtodo = useSelector((state)=>state.completedtodo);
+  const completedtodo = useSelector((state)=>state.todoReducer.completedtodo);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(fetchTodos());
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(fetchTodos());
+  // }, [completedtodo]);
 
   return (
     <div className='Right'>

@@ -4,12 +4,12 @@ import { deleteTodo,  fetchTodos, completeTodo } from '../redux/actions.js';
 
 
 export const TodoItems = () => {
-  const todoItems = useSelector((state)=>state.todoItems);
+  const todoItems = useSelector(state=>state.todoReducer.todoItems);
+  console.log(todoItems)
   const dispatch = useDispatch();
-  
   useEffect(() => {
     dispatch(fetchTodos());
-  }, [todoItems]);
+  }, []);
 
   return (
     <div className='pending-todo' onDrop={(e)=>{

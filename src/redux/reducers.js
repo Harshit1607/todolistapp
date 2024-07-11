@@ -14,27 +14,33 @@ function todoReducer(state=initialState, action){
             }
     case Add_todos:
             return{
-              ...state,
-              todoItems: [...state.todoItems, action.payload]
+              // ...state,
+              // todoItems: [...state.todoItems, action.payload]
+              todoItems: action.payload.todoItems,
+              completedtodo: action.payload.completedtodo
                   };
 
     case Delete_todos:
             return {
-              ...state,
-              todoItems: state.todoItems.filter((todo, index) => todo._id !== action.payload),
+              // ...state,
+              // todoItems: state.todoItems.filter((todo, index) => todo._id !== action.payload),
+              todoItems: action.payload.todoItems,
+              completedtodo: action.payload.completedtodo
                   };
 
     case Completed_todos:
-            const todoText = state.todoItems[action.payload].text;
-            const todoDate = state.todoItems[action.payload].date;
-            const todo ={
-              text: todoText,
-              date: todoDate
-            }
+            // const todoText = state.todoItems[action.payload].text;
+            // const todoDate = state.todoItems[action.payload].date;
+            // const todo ={
+            //   text: todoText,
+            //   date: todoDate
+            // }
             return{
-              ...state,
-              todoItems: state.todoItems.filter((todo, index) => index !== action.payload),
-              completedtodo: [...state.completedtodo, todo]
+              // ...state,
+              // todoItems: state.todoItems.filter((todo, index) => index !== action.payload),
+              // completedtodo: [...state.completedtodo, todo]
+              todoItems: action.payload.todoItems,
+              completedtodo: action.payload.completedtodo
             }
 
      default:
