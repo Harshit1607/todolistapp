@@ -34,9 +34,13 @@ export const Signup = () => {
 
 
   return (
-    <div>
-      <h2>Signup</h2>
-      <div>
+    <div className='Auth-container'>
+      <div className='Auth-left'>
+        <h3>Already a user, Login instead</h3>
+        <button onClick={()=>{navigate('/login');}}>Login</button>
+      </div>
+      <div className='Auth-right'>
+        <h2>Signup</h2>
         <input placeholder='username..' onChange={handleUser}/>
         <input placeholder='email...' onChange={handleEmail}/>
         <input placeholder='password...' onChange={handlePass}/>

@@ -31,14 +31,18 @@ export const Login = () => {
 
 
   return (
-    <div>
-      <h2>Login</h2>
-      <div>
-        <input placeholder='username..' onChange={handleUser}/>
-        <input placeholder='email...' onChange={handleEmail}/>
-        <input placeholder='password...' onChange={handlePass}/>
-        <button onClick={handleSubmit}>Login</button>
-        </div>
+    <div className='Auth-container'>
+    <div className='Auth-left'>
+      <h3>New user, Signup instead</h3>
+      <button onClick={()=>{navigate('/signup');}}>Signup</button>
     </div>
+    <div className='Auth-right'>
+      <h2>Login</h2>
+      <input placeholder='username..' onChange={handleUser}/>
+      <input placeholder='email...' onChange={handleEmail}/>
+      <input placeholder='password...' onChange={handlePass}/>
+      <button onClick={handleSubmit}>Login</button>
+      </div>
+  </div>
   )
 }
