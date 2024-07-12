@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
 import { login } from '../redux/actions.js';
-import { useDispatch } from 'react-redux';
+import { useDispatch} from 'react-redux';
 import {useNavigate} from 'react-router-dom'
 
 export const Login = () => {
 
+  
+  
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -24,9 +26,11 @@ export const Login = () => {
     const newText = e.target.value;
     setPass(newText);
   }
-  function handleSubmit(e){
-    dispatch(login({user, email, pass}))
-    navigate('/');
+  async function handleSubmit(e){
+    dispatch(login({user, email, pass}));
+    setTimeout(()=>{
+      navigate('/')
+    }, 1000);
   }
 
 

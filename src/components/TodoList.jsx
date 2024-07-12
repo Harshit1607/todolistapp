@@ -2,8 +2,10 @@ import React from 'react'
 import { CompletedTodo } from './CompletedTodo.js';
 import { Searchbox } from './Searchbox.js';
 import { TodoItems } from './TodoItems.js';
+import { useNavigate } from 'react-router-dom';
 
 export const TodoList = () => {
+  const navigate = useNavigate()
   return (
     <div className='TodoList' >
       <div className='Heading'><h1>TODOLIST</h1></div>
@@ -12,6 +14,9 @@ export const TodoList = () => {
         <TodoItems />
       </div>
       <CompletedTodo />
+      <button className='logout' onClick={()=>{localStorage.setItem('token', '')
+                            navigate('/login')
+      }}>Log out</button>
     </div>
   )
 }

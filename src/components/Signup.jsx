@@ -1,13 +1,11 @@
 import React, { useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch} from 'react-redux';
 import { signup } from '../redux/actions';
 import { useNavigate } from 'react-router-dom';
 
 export const Signup = () => {
-  const signupdetails = useSelector(state=>state.userReducer.state)
   const dispatch = useDispatch();
   const navigate = useNavigate()
-  //console.log(signupdetails);
   const[user, setUser]=useState("");
   const[email, setEmail]=useState("");
   const[pass, setPass]=useState("");
@@ -25,11 +23,10 @@ export const Signup = () => {
     setPass(newText);
   }
   function handleSubmit(){
-    dispatch(signup({user, email, pass}))
-    .then(
+    dispatch(signup({user, email, pass}));
+    setTimeout(()=>{
       navigate('/')
-    )
-    
+    }, 1000);
   }
 
 

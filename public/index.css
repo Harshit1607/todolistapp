@@ -41,7 +41,7 @@ code {
   height: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr 2fr;
+  grid-template-rows: 1fr 1fr 2fr 1fr;
   align-content: center;
   justify-items: center;
 }
@@ -61,6 +61,7 @@ code {
   flex-direction: column;
   align-items: flex-end;
   padding-right: 30px;
+  margin-bottom: 20px;
 }
 
 .Addtodo{
@@ -213,6 +214,7 @@ code {
   justify-content: flex-start;
   /* padding-top: 90px; */
   padding-left: 30px;
+  margin-bottom: 20px;
 }
 
 .Right .todos{
@@ -220,6 +222,19 @@ code {
 }
 .Right .info{
   width: 90%;
+}
+
+.logout{
+  grid-column: span 2;
+  height: 42px;
+  border: 2px solid #3C5B6F;
+  border-radius: 40px;
+  width: 100px;
+  background-color: #3C5B6F;
+  color: white;
+  font-family: "Margarine", sans-serif;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
 }
 
 

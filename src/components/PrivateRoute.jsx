@@ -1,10 +1,10 @@
 import React from 'react';
-import { Route, Navigate, Outlet } from 'react-router-dom';
+import {Navigate, Outlet } from 'react-router-dom';
 
 export const PrivateRoute = ()=> {
 
-  const isAuth = !!window.localStorage.getItem('token');
-  console.log(window.localStorage.getItem('token'))
+  const isAuth = !!localStorage.getItem('token');
+  console.log(localStorage.getItem('token'))
   console.log(isAuth)
   return (
     

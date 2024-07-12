@@ -104,7 +104,6 @@ app.patch('/:id', async (req, res)=>{
     const id = req.params.id;
     const todo = await Todo.findById(id);
     const newtext = todo.text;
-    console.log(todo);
     const newTodo = await new CompletedTodo({text: newtext});
     await newTodo.save();
     await Todo.deleteOne({_id: id});
@@ -116,13 +115,13 @@ app.patch('/:id', async (req, res)=>{
   }
 })
 
-app.post('/signup', async (req, res)=>{
+app.post('/signup', cors(), async (req, res)=>{
   const {user, email, pass} = req.body;
   try{
     const existingUser = await User.findOne({email});
 
     if(existingUser){
-      return res.json({message: 'user already exists'})
+    return res.json({message: 'user already exists'})
     }
     const hashedpass = await bcrypt.hash(pass, 10);
     const newUser = new User({user, email, pass: hashedpass});
@@ -138,7 +137,7 @@ app.post('/signup', async (req, res)=>{
   }
 })
 
-app.post('/login', async(req, res)=>{
+app.post('/login', cors(), async(req, res)=>{
   const {user, email, pass} = req.body;
   try {
     const existingUser = await User.findOne({email});
@@ -153,12 +152,13 @@ app.post('/login', async(req, res)=>{
       return res.json({message: 'Pass incorrect'})
     }
 
-    const token = jwt.sign({email: existingUser.email, id: existingUser._id}, 'secret', { expiresIn: '1h' })
+    const token =  jwt.sign({email: existingUser.email, id: existingUser._id}, 'secret', { expiresIn: '1h' })
+    console.log(token);
 
     res.json({existingUser, token, message: 'logged in'})
     
   } catch (error) {
-    
+    console.log(err)
   }
 })
 

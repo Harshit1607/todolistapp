@@ -15,7 +15,6 @@ export const fetchTodos = () => async (dispatch)=>{
 export const addTodo = (text)=>  async (dispatch)=>{
   try{
   const result = await axios.post(API_URL, {text});
-  
   dispatch({ type: Add_todos, payload: result.data });
   } catch (err){
     alert(err.message);
@@ -34,7 +33,6 @@ export const deleteTodo = (id)=> async (dispatch)=>{
 export const completeTodo = (id)=> async (dispatch)=>{
   try{
   const result = await axios.patch(`${API_URL}${id}`);
-  console.log(result.data)
   dispatch({type: Completed_todos, payload: result.data })
 } catch (err){
   alert(err.message);
@@ -42,13 +40,21 @@ export const completeTodo = (id)=> async (dispatch)=>{
 }
 
 export const signup = ({user, email, pass})=> async (dispatch)=>{
+  try{
   const result = await axios.post(`${API_URL}signup`, {user, email, pass});
-  console.log(result.data);
-  dispatch({type: User_signup, payload: result.data})
+  console.log(result.data)
+  dispatch({type: User_signup, payload: result.data})}
+  catch (err){
+    alert(err.message)
+  }
 }
 
 export const login = ({user, email, pass})=> async (dispatch)=>{
+  try{
   const result = await axios.post(`${API_URL}login`, {user, email, pass});
   console.log(result.data)
-  dispatch({type: User_login, payload: result.data})
+  dispatch({type: User_login, payload: result.data})}
+  catch (err){
+    alert(err.message)
+  }
 }
