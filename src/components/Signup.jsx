@@ -40,7 +40,7 @@ export const Signup = () => {
         <h2>Signup</h2>
         <input placeholder='username..' onChange={handleUser}/>
         <input placeholder='email...' onChange={handleEmail}/>
-        <input placeholder='password...' onChange={handlePass}/>
+        <input placeholder='password...' onChange={handlePass} type='password'/>
         <button onClick={handleSubmit}>Signup</button>
         </div>
     </div>

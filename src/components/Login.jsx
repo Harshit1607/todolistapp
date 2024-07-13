@@ -44,7 +44,7 @@ export const Login = () => {
       <h2>Login</h2>
       <input placeholder='username..' onChange={handleUser}/>
       <input placeholder='email...' onChange={handleEmail}/>
-      <input placeholder='password...' onChange={handlePass}/>
+      <input placeholder='password...' onChange={handlePass} type='password'/>
       <button onClick={handleSubmit}>Login</button>
       </div>
   </div>

@@ -117,17 +117,13 @@ app.patch('/:id', async (req, res)=>{
   const id = req.params.id;
   const userId = req.body.userId;
   try{
-    console.log(userId)
     const todo = await Todo.findOne({_id: id, userId: userId});
-    console.log(todo)
     const newtext = todo.text;
     const newTodo = new CompletedTodo({text: newtext, userId: userId});
-    console.log(newTodo)
     await newTodo.save();
     await Todo.deleteOne({_id: id, userId: userId});
     const todoItems = await Todo.find({userId: userId});
     const completedtodo = await CompletedTodo.find({userId: userId})
-    console.log({todoItems, completedtodo})
     res.json({todoItems, completedtodo});
   }catch(err){
     console.log(err);
