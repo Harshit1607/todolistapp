@@ -15,6 +15,7 @@ export const TodoList = () => {
       </div>
       <CompletedTodo />
       <button className='logout' onClick={()=>{localStorage.setItem('token', '')
+                                              localStorage.setItem('userId', '')
                             navigate('/login')
       }}>Log out</button>
     </div>

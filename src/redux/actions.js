@@ -3,40 +3,46 @@ import axios from 'axios'
 
 const API_URL='http://localhost:5000/';
 
-export const fetchTodos = () => async (dispatch)=>{
+export const fetchTodos = (userId) => async (dispatch)=>{
   try{
-  const result = await axios.get(API_URL,{headers: {authorization: localStorage.getItem('token')} } );
-  dispatch({ type: Fetch_todos, payload: result.data });
+    const result = await axios.get(API_URL,{ 
+      params: {
+        userId: userId
+      },
+      headers: {
+        authorization: localStorage.getItem('token'), 
+      },});
+    dispatch({ type: Fetch_todos, payload: result.data });
   } catch (err){
     alert(err.message);
   }
 }
 
-export const addTodo = (text)=>  async (dispatch)=>{
+export const addTodo = ({text, userId})=>  async (dispatch)=>{
   try{
-  const result = await axios.post(API_URL, {text});
+  const result = await axios.post(API_URL, {text, userId});
   dispatch({ type: Add_todos, payload: result.data });
   } catch (err){
     alert(err.message);
   }
 }
 
-export const deleteTodo = (id)=> async (dispatch)=>{
+export const deleteTodo = ({id, userId})=> async (dispatch)=>{
   try{
-  const result = await axios.delete(`${API_URL}${id}`);
+  const result = await axios.delete(`${API_URL}${id}`, {data: {userId: userId}});
   dispatch({type: Delete_todos, payload: result.data })
 } catch (err){
   alert(err.message);
 }
 }
 
-export const completeTodo = (id)=> async (dispatch)=>{
+export const completeTodo = ({id, userId})=> async (dispatch)=>{
   try{
-  const result = await axios.patch(`${API_URL}${id}`);
+  const result = await axios.patch(`${API_URL}${id}`, {userId});
   dispatch({type: Completed_todos, payload: result.data })
-} catch (err){
-  alert(err.message);
-}
+  } catch (err){
+    alert(err.message);
+  }
 }
 
 export const signup = ({user, email, pass})=> async (dispatch)=>{

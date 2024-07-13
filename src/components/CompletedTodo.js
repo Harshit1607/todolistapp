@@ -4,6 +4,7 @@ import { fetchTodos, deleteTodo, addTodo } from '../redux/actions.js';
 
 export const CompletedTodo = () => {
   const completedtodo = useSelector((state)=>state.todoReducer.completedtodo);
+  const userId = useSelector(state=>state.userReducer.userId);
   const dispatch = useDispatch();
 
   // useEffect(() => {
@@ -13,7 +14,6 @@ export const CompletedTodo = () => {
   return (
     <div className='Right'>
         <div className='completed-todo' onDrop={()=>{
-          console.log(2)
           dispatch(fetchTodos())}}>
         <h2>Completed Todos</h2>
         { completedtodo?
@@ -21,12 +21,12 @@ export const CompletedTodo = () => {
             return(
               <div className='todos' key={item._id} draggable onDragEnd={()=>{
                 dispatch(addTodo(item.text))
-                dispatch(deleteTodo(item._id))}}>
+                dispatch(deleteTodo({id: item._id, userId}))}}>
                 <div className='info'>
                   <span className='info-main'>Task- {item.text}</span>
                   <span className='info-date'>Date Completed- {item.date}</span>
                 </div>
-                <button onClick={()=>{dispatch(deleteTodo(item._id))}}>Del</button>
+                <button onClick={()=>{dispatch(deleteTodo({id: item._id, userId}))}}>Del</button>
               </div>
             )
           }) : null

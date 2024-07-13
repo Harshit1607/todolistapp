@@ -4,6 +4,7 @@ import { addTodo, fetchTodos } from '../redux/actions.js';
 import { TodoItems } from './TodoItems.js';
 
 export const Searchbox = () => {
+  const userId = useSelector(state=>state.userReducer.userId);
   const dispatch = useDispatch();
 
   const [text, setText] = useState("")
@@ -14,7 +15,7 @@ export const Searchbox = () => {
   }
 
   function AddTodo(){
-    dispatch(addTodo(text));
+    dispatch(addTodo({text, userId}));
     setText("")
   }
 

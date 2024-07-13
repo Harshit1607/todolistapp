@@ -28,6 +28,11 @@ const todoSchema = new mongoose.Schema({
   completed: {
     type: Boolean,
     default: false
+  },
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
   }
 })
 
@@ -40,6 +45,11 @@ const completedSchema = new mongoose.Schema({
     type: Date,
     default: Date.now
   },
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
+  }
 })
 
 const userSchema = new mongoose.Schema({
@@ -64,9 +74,11 @@ const User = mongoose.model("User", userSchema);
 
 
 app.get("/", cors(), auth, async (req, res)=>{
+  const userId = (req.query.userId);
   try{
-    const todoItems = await Todo.find();
-    const completedtodo = await CompletedTodo.find()
+    const objectid = new mongoose.Types.ObjectId(userId);
+    const todoItems = await Todo.find({userId: objectid});
+    const completedtodo = await CompletedTodo.find({userId: objectid})
     res.json({todoItems, completedtodo});
   }catch(err){
     console.log(err);
@@ -75,11 +87,12 @@ app.get("/", cors(), auth, async (req, res)=>{
 
 app.post("/", cors(), async (req, res)=>{
     const todotext = req.body.text;
+    const userId = req.body.userId
   try{
-    const todo = new Todo({text: todotext});
+    const todo = new Todo({text: todotext, userId: userId});
     await todo.save();
-    const todoItems = await Todo.find();
-    const completedtodo = await CompletedTodo.find()
+    const todoItems = await Todo.find({userId: userId});
+    const completedtodo = await CompletedTodo.find({userId: userId})
     res.json({todoItems, completedtodo});
   }catch(err){
     console.log(err);
@@ -87,12 +100,13 @@ app.post("/", cors(), async (req, res)=>{
 })
 
 app.delete('/:id', cors(), async (req, res)=>{ 
+  const userId = req.body.userId;
+  const id = req.params.id;
   try{
-    const id = req.params.id;
-    await Todo.deleteOne({_id: id});
-    await CompletedTodo.deleteOne({_id: id});
-    const todoItems = await Todo.find();
-    const completedtodo = await CompletedTodo.find()
+    await Todo.deleteOne({_id: id, userId: userId});
+    await CompletedTodo.deleteOne({_id: id, userId: userId});
+    const todoItems = await Todo.find({userId: userId});
+    const completedtodo = await CompletedTodo.find({userId: userId})
     res.json({todoItems, completedtodo});
   }catch(err){
     console.log(err);
@@ -100,15 +114,20 @@ app.delete('/:id', cors(), async (req, res)=>{
 })
 
 app.patch('/:id', async (req, res)=>{ 
+  const id = req.params.id;
+  const userId = req.body.userId;
   try{
-    const id = req.params.id;
-    const todo = await Todo.findById(id);
+    console.log(userId)
+    const todo = await Todo.findOne({_id: id, userId: userId});
+    console.log(todo)
     const newtext = todo.text;
-    const newTodo = await new CompletedTodo({text: newtext});
+    const newTodo = new CompletedTodo({text: newtext, userId: userId});
+    console.log(newTodo)
     await newTodo.save();
-    await Todo.deleteOne({_id: id});
-    const todoItems = await Todo.find();
-    const completedtodo = await CompletedTodo.find()
+    await Todo.deleteOne({_id: id, userId: userId});
+    const todoItems = await Todo.find({userId: userId});
+    const completedtodo = await CompletedTodo.find({userId: userId})
+    console.log({todoItems, completedtodo})
     res.json({todoItems, completedtodo});
   }catch(err){
     console.log(err);
@@ -153,7 +172,6 @@ app.post('/login', cors(), async(req, res)=>{
     }
 
     const token =  jwt.sign({email: existingUser.email, id: existingUser._id}, 'secret', { expiresIn: '1h' })
-    console.log(token);
 
     res.json({existingUser, token, message: 'logged in'})
     
@@ -164,7 +182,7 @@ app.post('/login', cors(), async(req, res)=>{
 
 async function auth(req, res, next) {
   const token = req.headers.authorization;
-  console.log(token);
+
   if(!token){
     return res.status(401).json({message: 'authprization failed'})
   }
@@ -173,7 +191,7 @@ async function auth(req, res, next) {
     req.user = decoded;
     next();
   } catch (error) {
-    console.log(error);
+    next();
   }
 
 }
