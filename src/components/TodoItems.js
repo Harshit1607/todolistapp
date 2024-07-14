@@ -3,6 +3,8 @@ import { useSelector, useDispatch } from 'react-redux'
 import { deleteTodo,  fetchTodos, completeTodo } from '../redux/actions.js';
 import { jwtDecode } from 'jwt-decode';
 import { useNavigate } from 'react-router-dom';
+import { SortableContext, useSortable, verticalListSortingStrategy } from '@dnd-kit/sortable';
+import { SingleTodoItem } from './SingleTodoItem.jsx';
 
 
 export const TodoItems = () => {
@@ -11,44 +13,44 @@ export const TodoItems = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const token = localStorage.getItem('token');
-  const tokenexp = (jwtDecode(token)).exp
+  useEffect(()=>{
+    const token = localStorage.getItem('token');
+    const tokenexp = (jwtDecode(token)).exp
 
-  const now = Date.now() / 1000
+    const now = Date.now() / 1000
 
-  if(now>tokenexp){
-    localStorage.setItem('token', '')
-    localStorage.setItem('userId', '')
-    navigate('/login')
-  }
+    if(now>tokenexp){
+      localStorage.setItem('token', '')
+      localStorage.setItem('userId', '')
+      navigate('/login')
+    }
+  }, [])
 
   useEffect(() => {
     dispatch(fetchTodos(userId));
   }, []);
 
+  function handleComplete(id, userId){
+    dispatch(completeTodo({id, userId}));
+  }
+  function handleDelete(id, userId){
+    dispatch(deleteTodo({id, userId}))
+  }
+
   return (
-    <div className='pending-todo' onDrop={(e)=>{
-      dispatch(fetchTodos(userId))}}>
+    <SortableContext strategy={verticalListSortingStrategy} items={todoItems}>
+    <div className='pending-todo'>
           <h2>Pending Todos</h2>
             {
-              todoItems.map((item, index) => {
-                return (
-                  <div className='todos' key={item._id} draggable 
-                    onDragEnd={(e)=>{
-                    dispatch(completeTodo({id: item._id, userId}))}}> 
-                    <input type='radio' checked={false} className='check-box'onChange={()=>{
-                      dispatch(completeTodo({id: item._id, userId}))}} />
-                    <div className='info' key={item._id} id={item._id}>
-                      <span className='info-main' >Task- {item.text}</span>
-                      <span className='info-date'>Date Added- {item.date}</span>
-                    </div>
-                    <button onClick={()=>{dispatch(deleteTodo({id: item._id, userId}))}} >Del</button>
-                   </div>
+              todoItems.map((item) => {
+                return(
+                <SingleTodoItem key={item._id} item={item} 
+                handleComplete={()=>handleComplete(item._id, userId)}
+                handleDelete={() =>handleDelete(item._id, userId)} />
                 )
               })
             }
-            
-            
         </div>
+        </SortableContext>
   )
 }
