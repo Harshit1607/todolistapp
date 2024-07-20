@@ -14,7 +14,15 @@ mongoose.connect('mongodb://localhost:27017/todos');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cors())
+
+const corsOptions = {
+  origin: '*', // Ensure no trailing slash
+  methods: 'GET, POST, PUT, PATCH, DELETE, OPTIONS',
+  allowedHeaders: 'Content-Type, Authorization',
+  credentials: true // Enable credentials if needed
+};
+app.use(cors(corsOptions));
+
 
 const todoSchema = new mongoose.Schema({
   text : {
@@ -113,7 +121,7 @@ app.delete('/:id', cors(), async (req, res)=>{
   }
 })
 
-app.patch('/:id', cors(), async (req, res)=>{ 
+app.put('/:id', cors(), async (req, res)=>{ 
   const id = req.params.id;
   const userId = req.body.userId;
   try{

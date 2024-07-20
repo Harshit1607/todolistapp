@@ -38,7 +38,7 @@ export const deleteTodo = ({id, userId})=> async (dispatch)=>{
 
 export const completeTodo = ({id, userId})=> async (dispatch)=>{
   try{
-  const result = await axios.patch(`${API_URL}${id}`, {userId});
+  const result = await axios.put(`${API_URL}${id}`, {userId});
   dispatch({type: Completed_todos, payload: result.data })
   } catch (err){
     alert(err.message);
