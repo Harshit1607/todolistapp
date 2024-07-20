@@ -113,7 +113,7 @@ app.delete('/:id', cors(), async (req, res)=>{
   }
 })
 
-app.patch('/:id', async (req, res)=>{ 
+app.patch('/:id', cors(), async (req, res)=>{ 
   const id = req.params.id;
   const userId = req.body.userId;
   try{

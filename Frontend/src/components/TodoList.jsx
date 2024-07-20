@@ -1,9 +1,10 @@
-import React from 'react'
+import React ,{useEffect, useState} from 'react'
+import { jwtDecode } from 'jwt-decode';
 import { CompletedTodo } from './CompletedTodo.js';
 import { Searchbox } from './Searchbox.js';
 import { TodoItems } from './TodoItems.js';
 import { useNavigate } from 'react-router-dom';
-import { closestCorners, DndContext } from '@dnd-kit/core';
+import { closestCorners, DndContext, DragOverlay } from '@dnd-kit/core';
 import { useSelector, useDispatch } from 'react-redux';
 import { addTodo, completeTodo, deleteTodo } from '../redux/actions.js';
 
@@ -14,6 +15,26 @@ export const TodoList = () => {
   const dispatch = useDispatch();
   const userId = useSelector(state => state.userReducer.userId);
 
+  const [activeId, setActiveId] = useState()
+
+  useEffect(()=>{
+    const token = localStorage.getItem('token');
+    const tokenexp = (jwtDecode(token)).exp
+
+    const now = Date.now() / 1000
+
+    if(now>tokenexp){
+      localStorage.setItem('token', '')
+      localStorage.setItem('userId', '')
+      navigate('/login')
+    }
+  }, [])
+
+  function handleDragStart(event){
+    setActiveId(event.active.id)
+  }
+  console.log(activeId)
+
   function handleDragend(event){
     const {active, over} = event;
     if(!over){
@@ -21,7 +42,6 @@ export const TodoList = () => {
     }
     const activeId = active.id;
     const overId = over.id;
-    console.log(overId)
 
     const activeItem = pendingTodos.find(todo => todo._id === activeId) || completedTodos.find(todo => todo._id === activeId);
 
@@ -40,11 +60,21 @@ export const TodoList = () => {
     <div className='TodoList' >
       <div className='Heading'><h1>TODOLIST</h1></div>
       <Searchbox />
-      <DndContext collisionDetection={closestCorners} onDragEnd={handleDragend}>
+      <DndContext collisionDetection={closestCorners} onDragStart={handleDragStart}  onDragEnd={handleDragend}>
       <div className='Left'>
         <TodoItems />
       </div>
       <CompletedTodo />
+      <DragOverlay>
+      {activeId ? (
+            <div className='todos' >
+              <div className='info'>
+              <span className='info-main'>Task- {pendingTodos.find(todo => todo._id === activeId)?.text || completedTodos.find(todo => todo._id === activeId)?.text}</span>
+              <span className='info-date'>Date Completed- {pendingTodos.find(todo => todo._id === activeId)?.date || completedTodos.find(todo => todo._id === activeId)?.date}</span>
+            </div>
+            </div>
+          ) : null}
+      </DragOverlay>
       </DndContext>
       <button className='logout' onClick={()=>{localStorage.setItem('token', '')
                                               localStorage.setItem('userId', '')

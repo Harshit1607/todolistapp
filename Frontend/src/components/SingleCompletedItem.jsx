@@ -12,12 +12,15 @@ export const SingleCompletedItem = ({item, handleDelete}) => {
   } = useSortable({ id: item._id });
 
   const style = {
-    transform: CSS.Transform.toString(transform),
+    transform: CSS.Translate.toString({
+      x: (transform?.x * 10) / 7,
+      y: (transform?.y * 10) / 7,
+    }),
     transition,
   };
   return(
-    <div className='todos' draggable key={item._id} ref={setNodeRef} style={style} {...attributes} {...listeners}>
-      <div className='info'>
+    <div className='todos' key={item._id} ref={setNodeRef} style={style}>
+      <div className='info'  {...attributes} {...listeners}>
         <span className='info-main'>Task- {item.text}</span>
         <span className='info-date'>Date Completed- {item.date}</span>
       </div>
