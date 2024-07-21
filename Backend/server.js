@@ -4,13 +4,19 @@ import mongoose from "mongoose";
 import cors from 'cors';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken'
+import dotenv from 'dotenv'
+
+dotenv.config();
 
 
 const app = express();
-const port = 5000;
+const port = process.env.PORT || 5000;
+
+const mongourl = process.env.MONGOURL;
+const jwt_secret = process.env.JWT_SECRET || "secret";
 
 
-mongoose.connect('mongodb://localhost:27017/todos');
+mongoose.connect(mongourl);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -150,7 +156,7 @@ app.post('/signup', cors(), async (req, res)=>{
     const newUser = new User({user, email, pass: hashedpass});
     await newUser.save();
 
-    const token = jwt.sign({email: newUser.email, id: newUser._id}, 'secret', { expiresIn: '1h' })
+    const token = jwt.sign({email: newUser.email, id: newUser._id}, jwt_secret, { expiresIn: '1h' })
 
     return res.json({newUser, token, message: 'signed up'})
     
@@ -175,7 +181,7 @@ app.post('/login', cors(), async(req, res)=>{
       return res.json({message: 'Pass incorrect'})
     }
 
-    const token =  jwt.sign({email: existingUser.email, id: existingUser._id}, 'secret', { expiresIn: '1h' })
+    const token =  jwt.sign({email: existingUser.email, id: existingUser._id}, jwt_secret, { expiresIn: '1h' })
 
     res.json({existingUser, token, message: 'logged in'})
     
@@ -191,7 +197,7 @@ async function auth(req, res, next) {
     return res.status(401).json({message: 'authprization failed'})
   }
   try {
-    const decoded = jwt.verify(token, 'secret');
+    const decoded = jwt.verify(token, jwt_secret);
     req.user = decoded;
     next();
   } catch (error) {
@@ -200,7 +206,7 @@ async function auth(req, res, next) {
 
 }
 
-app.listen(port, () => {
+app.listen(port, '0.0.0.0', () => {
   console.log(`Server running on port ${port}`);
-});
+})
 
