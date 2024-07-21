@@ -22,7 +22,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 const corsOptions = {
-  origin: '*', // Ensure no trailing slash
+  origin: 'https://todolist-y9qu.onrender.com', // Ensure no trailing slash
   methods: 'GET, POST, PUT, PATCH, DELETE, OPTIONS',
   allowedHeaders: 'Content-Type, Authorization',
   credentials: true // Enable credentials if needed
