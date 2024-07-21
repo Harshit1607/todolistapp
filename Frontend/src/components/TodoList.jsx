@@ -64,7 +64,9 @@ export const TodoList = () => {
       <div className='Left'>
         <TodoItems />
       </div>
+      <div className='Right'>
       <CompletedTodo />
+      </div>
       <DragOverlay>
       {activeId ? (
             <div className='todos' >
