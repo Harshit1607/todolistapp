@@ -9,7 +9,7 @@
 /coverage
 
 # production
-/build
+Frontend/build
 
 # misc
 .DS_Store
@@ -28,4 +28,5 @@ Frontend/node_modules
 
 Backend/.env
 
-Frontend/.env
+Frontend/.env.development
+Frontend/.env.production
