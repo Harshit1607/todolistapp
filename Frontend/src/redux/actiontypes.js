@@ -5,3 +5,5 @@ export const Completed_todos = 'Completed_todos'
 
 export const User_signup = 'User_signup'
 export const User_login = 'User_login'
+
+export const User_logout = 'User_logout'

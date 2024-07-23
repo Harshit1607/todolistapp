@@ -1,10 +1,9 @@
-import { User_login, User_signup } from "./actiontypes.js";
+import { User_login, User_signup, User_logout } from "./actiontypes.js";
 
 const initialState = {
-  user: '',
-  token: '',
-  message: '',
-  userId: localStorage.getItem('userId')? localStorage.getItem('userId'): '',
+  user: localStorage.getItem('user')? localStorage.getItem('user') : null,
+  token: localStorage.getItem('token')? localStorage.getItem('token') : null,
+  userId: localStorage.getItem('userId')? localStorage.getItem('userId') : null,
 }
 
 function userReducer(state=initialState, action){
@@ -29,6 +28,12 @@ function userReducer(state=initialState, action){
         token: action.payload.token,
         message: action.payload.message,
         userId: action.payload.newUser._id
+      }
+    case User_logout:
+      return{
+        user: null,
+        token: null,
+        userId: null
       }
     default:  return state
   }

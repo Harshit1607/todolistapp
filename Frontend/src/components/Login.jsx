@@ -1,14 +1,18 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { login } from '../redux/actions.js';
-import { useDispatch} from 'react-redux';
+import { useDispatch, useSelector,} from 'react-redux';
 import {useNavigate} from 'react-router-dom'
 
 export const Login = () => {
-
-  
-  
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const token = useSelector(state=>state.userReducer.token)
+  
+  useEffect(()=>{
+    if(token){
+    navigate('/');
+    }
+  }, [token])
 
   const[user, setUser]=useState("");
   const[email, setEmail]=useState("");
@@ -28,9 +32,6 @@ export const Login = () => {
   }
   async function handleSubmit(e){
     dispatch(login({user, email, pass}));
-    setTimeout(()=>{
-      navigate('/')
-    }, 2000);
   }
 
 

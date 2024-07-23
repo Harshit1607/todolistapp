@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { closestCorners, DndContext, DragOverlay } from '@dnd-kit/core';
 import { useSelector, useDispatch } from 'react-redux';
 import { addTodo, completeTodo, deleteTodo } from '../redux/actions.js';
+import { logout } from '../redux/actions.js';
 
 export const TodoList = () => {
   const navigate = useNavigate()
@@ -78,9 +79,12 @@ export const TodoList = () => {
           ) : null}
       </DragOverlay>
       </DndContext>
-      <button className='logout' onClick={()=>{localStorage.setItem('token', '')
-                                              localStorage.setItem('userId', '')
-                            navigate('/login')
+      <button className='logout' onClick={()=>{
+          localStorage.removeItem('token');
+          localStorage.removeItem('userId');
+          localStorage.removeItem('user');
+          dispatch(logout());
+          navigate('/login')
       }}>Log out</button>
     </div>
   )

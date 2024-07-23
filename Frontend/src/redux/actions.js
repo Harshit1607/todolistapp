@@ -1,4 +1,4 @@
-import { Fetch_todos, Add_todos, Delete_todos, Completed_todos, User_login, User_signup } from "./actiontypes.js";
+import { Fetch_todos, Add_todos, Delete_todos, Completed_todos, User_login, User_signup, User_logout } from "./actiontypes.js";
 import axios from 'axios'
 
 const API_URL=process.env.REACT_APP_API_URL;
@@ -63,4 +63,8 @@ export const login = ({user, email, pass})=> async (dispatch)=>{
   catch (err){
     alert(err.message)
   }
+}
+
+export const logout = (dispatch)=>{
+  dispatch({type: User_logout})
 }
