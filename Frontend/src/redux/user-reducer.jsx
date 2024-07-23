@@ -17,7 +17,6 @@ function userReducer(state=initialState, action){
 
         user: action.payload.existingUser.user,
         token: action.payload.token,
-        message: action.payload.message,
         userId: action.payload.existingUser._id
       }
     case User_signup:
@@ -26,7 +25,6 @@ function userReducer(state=initialState, action){
         ...state,
         user: action.payload.newUser.user,
         token: action.payload.token,
-        message: action.payload.message,
         userId: action.payload.newUser._id
       }
     case User_logout:

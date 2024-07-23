@@ -65,6 +65,6 @@ export const login = ({user, email, pass})=> async (dispatch)=>{
   }
 }
 
-export const logout = (dispatch)=>{
+export const logout = ()=>(dispatch)=>{
   dispatch({type: User_logout})
 }
