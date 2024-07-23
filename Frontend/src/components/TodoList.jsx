@@ -25,8 +25,10 @@ export const TodoList = () => {
     const now = Date.now() / 1000
 
     if(now>tokenexp){
-      localStorage.setItem('token', '')
-      localStorage.setItem('userId', '')
+      localStorage.removeItem('token');
+      localStorage.removeItem('userId');
+      localStorage.removeItem('user');
+      dispatch(logout());
       navigate('/login')
     }
   }, [])
