@@ -292,6 +292,21 @@ code {
   font-family: "Margarine", sans-serif;
 }
 
+.auth-pass-container{
+  position: relative;
+  width: fit-content;
+  height: fit-content;
+}
+.auth-eye{
+  width: 15px;
+  height: 15px;
+  position: absolute;
+  right: 20px;
+  bottom: 15px;
+  z-index: 10;
+  cursor: pointer;
+}
+
 
 @media (max-width: 768px) {
   .Auth-container{
