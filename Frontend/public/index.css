@@ -1,3 +1,9 @@
+button{
+  cursor: pointer;
+}
+input:focus{
+  outline: none;
+}
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -112,7 +118,8 @@ code {
 .pending-todo, .completed-todo{
   border-radius: 25px;
   min-height: 300px;
-  max-height: fit-content;
+  max-height: 300px;
+  overflow-y: scroll;
   width: 55%;
   display: flex;
   flex-direction: column;
@@ -120,6 +127,12 @@ code {
   padding-bottom: 10px;
   background: linear-gradient(135deg, #fff, #f5f5f5);
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  scroll-behavior: smooth;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;  /* Internet Explorer and Edge */
+}
+.pending-todo::-webkit-scrollbar, .completed-todo::-webkit-scrollbar {
+  display: none;
 }
 
 .pending-todo h2, .completed-todo h2{
