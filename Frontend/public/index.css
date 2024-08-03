@@ -130,6 +130,7 @@ code {
   scroll-behavior: smooth;
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none;  /* Internet Explorer and Edge */
+  position: relative;
 }
 .pending-todo::-webkit-scrollbar, .completed-todo::-webkit-scrollbar {
   display: none;
@@ -140,6 +141,9 @@ code {
   margin-bottom: 10px;
   color: #3C5B6F;
   position: sticky;
+  top: 0;
+  width: 100%;
+  z-index: 5;
 }
 
 .completed-todo{
